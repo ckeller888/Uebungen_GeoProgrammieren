@@ -8,91 +8,136 @@ class Vector3:
         self.y=y
         self.z=z
 
-    #Konversion zu Zeichenkette
+    # Konversion zu Zeichenkette
     def __str__ (self):
         return f"({self.x},{self.y},{self.z})"
+    
 
-    #Addition
+    # Addition
     def __add__ (self, other):
 
         if type(other) == int or type(other) == float:
             return Vector3(self.x + other, self.y + other, self.z + other)
         
         else:
-            return Vector3(self.x + other.x, self.y + other.y, self.z + other)
+            return Vector3(self.x + other.x, self.y + other.y, self.z + other.z)
         
     def __radd__(self, other):
         return Vector3(self.x + other, self.y + other, self.z + other)
 
 
-    #Subtraktion
+    # Subtraktion
     def __sub__ (self, other):
         
         if type(other) == int or type(other) == float:
             return Vector3(self.x - other, self.y - other, self.z - other)
         
         else:
-            return Vector3(self.x - other.x, self.y - other.y, self.z - other)
+            return Vector3(self.x - other.x, self.y - other.y, self.z - other.z)
         
-    def __radd__(self, other):
-        return Vector3(self.x - other, self.y - other, self.z - other)
-
-
-    #komponentenweise Muliplikation
-    def __mul__ (self, other):
+    def __rsub__(self, other):
+        return Vector3(other - self.x, other - self.y, other - self.z)
     
+
+    # Methode cross
+    def cross (self, other):
+        crossx = self.y * other.z - self.z * other.y
+        crossy = self.z * other.x - self.x * other.z
+        crossz = self.x * other.y - self.y * other.x
+        return Vector3 (crossx, crossy, crossz)
+    
+
+    # Kreuzprodukt
+    def __mul__ (self, other):
+        return self.cross (other)
+
+
+    # Methode dot
+    def dot (self, other):
+        return (self.x * other.x + self.y * other.y + self.z * other.z)
+    
+    
+    # Multiplikation mit Skalar
+    def __mul__ (self, other):
+        return self.dot (other)
+
+
+    # komponentenweise Multiplikation oder mit Zahl
+    def __mul__ (self, other):
+        
         if type(other) == int or type(other) == float:
             return Vector3(self.x * other, self.y * other, self.z * other)
-    
-        else:
-            return Vector3(self.x * other.x, self.y * other.y, self.z * other)
-    
-    def __radd__(self, other):
-        return Vector3(self.x * other, self.y * other, self.z * other)
-
-
-
-    #Multiplikation mit Skalar
-    def __mul__ (self, other):
-        
-        if type(other) == int or type(other) == float:
-            return Vector3(self.x * other + self.y * other + self.z * other)
         
         else:
-            return Vector3(self.x * other.x + self.y * other.y + self.z * other)
+            return self.cross (other)
         
-    def __radd__(self, other):
-        return Vector3(self.x * other + self.y * other + self.z * other)
-
+    def __rmul__ (self, other):
+        return Vector3(other * self.x, other * self.y, other * self.z)
+   
+        
+    # Vektor normieren
+    def normalize (self):
+        normalize = (1/((self.x**2 + self.y**2 + self.z**2)**0.5))
+        return Vector3(normalize*self.x, normalize*self.y, normalize*self.z)
+    
 
 
 # Abfrage
-# dot 10 
-# -2 -5
 
 a = Vector3(3,4,2)
 b = Vector3(2,1,0)
-c = a * b # Komponentenweise Multiplikation
+
+
+# Konversion Zeichenkette
+'''
+s = str(a)
+print (s)
+'''
+
+# Addition
+'''
+c = a + bx
 print(c)
-d = a.dot(b) # Skalarprodukt
-# e = a.cross(b) # Kreuzprodukt
 
+c = b + 3
+print(c)
+'''
+  
+# Subtraktion
+'''
+c = a - b
+print(c)
 
+w = 10 - a
+print (w)
+'''
 
-a = Vector3(3,4,2)
-b = Vector3(2,1,0)
+# Multilpikation mit Zahl
+'''
+g = 2 * a
+print (g)
+'''
 
+# komponentenweise Multiplikation
+'''
+c = a * b
+print(c)
+'''
 
-v1 = Vector3(-3,-4)
-v2=Vector3(-4,5)
+# Skalarprodukt
+'''
+d = a.dot(b)
+print(d)
+'''
 
+# Kreuzprodukt
+'''
+e = a.cross(b) # Kreuzprodukt
+print(e)
+'''
 
-v4=v1+v2
-
-print(v4)
-
-print((v1-v2))
-
-v5=Vector3(7,8)
-v6= v5+1
-print(v6)
+# Vektor normieren
+'''
+f = Vector3.normalize(a)
+print (f)
+'''
