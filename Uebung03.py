@@ -68,20 +68,25 @@ class Kreis(Figur):
 
     def umfang(self):
         return round(math.pi * self.radius * 2, 3)
+    
 
 
-# Weiss nicht wie ich das mit dem Polygon machen muss
-'''class Polygon(Figur):
-    def __init__(self, p):
+class Polygon(Figur):
+    def __init__(self, punkte):
         super().__init__("Polygon")
-        self.p = p
+        self.punkte = punkte
 
-    def Umfang(self):
-        return 0
+    def umfang(self):
+        u = 0
+        for i in range(0, len(self.punkte)):
+            j = (i + 1)%(len(self.punkte))
+            u = u + math.sqrt((self.punkte[j].x - self.punkte[i].x)**2 + 
+                              (self.punkte[j].y - self.punkte[i].y)**2)
+        return u
     
     def __str__(self):
-        return f"{self.name} mit {self.p}"'''
-    
+        string = ', '.join(str(i) for i in self.punkte)
+        return f"{self.name}, {string}"
 
 
 # Abfrage
@@ -115,7 +120,7 @@ print (k.umfang ())
 
 # Polygon
 '''
-p = Polygon(A,B,C,D)
+p = Polygon([A, B, C])
 print(p)
-print(p.Umfang())
+print(p.umfang())
 '''
