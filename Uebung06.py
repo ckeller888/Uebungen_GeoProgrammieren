@@ -20,7 +20,7 @@ class Fenster(QMainWindow):
         self.Karte.clicked.connect(self.karte)
 
     def karte(self):
-        s = f"{self.Breite.text()},{self.Laenge.text()}"    
+        s = f"{self.Laenge.text()},{self.Breite.text()}"    
         link = f"https://www.google.ch/maps/place/{s}"
         l = QDesktopServices.openUrl(QUrl(link))
         urllib.parse.quote(l) # enthält 'Hell%C3%B6%20W%C3%B6rld%40'
